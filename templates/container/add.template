@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+{{#componentToImport}}
+import {{ . }} from '../../components/{{ . }}';
+{{/componentToImport}}
+import Button from '../../components/Button';
+import { setFormData, create, clearFormData } from './actions';
+
+class AddContainer extends Component {
+
+    componentDidMount(){
+        const { clearFormData } = this.props
+        clearFormData()
+    }
+
+    onSubmit = e => {
+        e.preventDefault()
+        const { create, formData } = this.props
+        create(formData)
+    }
+
+    onChangeInput = e => {
+        const { setFormData } = this.props
+        setFormData({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    render(){
+
+        const { formData } = this.props
+
+        return (
+            <div>
+                <form onSubmit={this.onSubmit}>
+                {{#fields}}
+                    <{{ type }} 
+                        value={formData.{{ name }}}
+                        onChange={this.onChangeInput}
+                        placeholder="{{ placeholder }}"
+                        name="{{ name }}"/>
+                {{/fields}}
+                    <Button>Add</Button>
+                </form>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        formData: state.get(`{{ reducer }}`).formData
+    }
+}
+
+const mapDispatchToProps = {
+    setFormData, 
+    clearFormData,
+    create
+}
+
+const withConnect = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)
+
+export default compose(
+    withConnect
+)(AddContainer)

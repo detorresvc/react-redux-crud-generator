@@ -1,0 +1,27 @@
+import React, { Component, Fragment } from 'react';
+import { Route, Link } from 'react-router-dom';
+import MainContainer from './Main';
+import AddContainer from './Add';
+import EditContainer from './Edit';
+
+class {{ moduleName }} extends Component {
+
+    render(){
+
+        const { match  } = this.props
+
+        return (
+            <Fragment>
+                <Link to={`${match.path}`}>List</Link>
+                {" "}
+                <Link to={`${match.path}/add`}>Add</Link>
+                <hr/>
+                <Route exact path={`${match.path}/`} component={MainContainer}/>
+                <Route path={`${match.path}/add`} component={AddContainer}/>
+                <Route path={`${match.path}/:id/edit`} component={EditContainer}/>
+            </Fragment>
+        )
+    }
+}
+
+export default {{ moduleName }}

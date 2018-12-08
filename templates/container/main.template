@@ -1,0 +1,82 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import Table from '../../components/Table';
+import Tbody from '../../components/Tbody';
+import Tr from '../../components/Tr';
+import Td from '../../components/Td';
+import { getList, omit } from './actions';
+import { Link } from 'react-router-dom';
+
+class MainContainer extends Component {
+    
+    onDelete = data => e => {
+        e.preventDefault()
+
+        const r = confirm(`Do you want to delete data with id ${data.id}`);
+        if (r == true) {
+            const { omit } = this.props 
+            omit(data.id)
+        } 
+    }
+
+    render(){
+
+        const { match, list } = this.props
+
+        return (
+            <div>
+                <Table>
+                    <Tbody>
+                        <Tr>
+                        {{#fields}}
+                            <Td>
+                                {{ name }}
+                            </Td>
+                        {{/fields}}
+                            <Td>
+                                Actions
+                            </Td>
+                        </Tr>
+                        {list.map((item,i) => {
+                            return (
+                                <Tr key={`item${i}`}>
+                                {{#fields}}
+                                    <Td>
+                                        {item.{{ name }}}
+                                    </Td>
+                                {{/fields}}
+                                    <Td>
+                                        <Link to={`${match.path}${item.id}/edit`}>Edit</Link>
+                                        {" "}
+                                        <a href="#" onClick={this.onDelete(item)}>Delete</a>
+                                    </Td>
+                                </Tr>
+                            )
+                        })}
+                    </Tbody>
+                </Table>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        list: state.get(`{{ reducer }}`).list
+    }
+}
+
+const mapDispatchToProps = {
+    getList,
+    omit
+}
+
+const withConnect = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)
+
+export default compose(
+    withConnect
+)(MainContainer)

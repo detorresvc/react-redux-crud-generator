@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+{{#componentToImport}}
+import {{ . }} from '../../components/{{ . }}';
+{{/componentToImport}}
+import Button from '../../components/Button';
+import { setFormData, update, get } from './actions';
+
+class EditContainer extends Component {
+
+    componentDidMount(){
+        const { get, match } = this.props
+        get(match.params.id)
+    }
+
+    onSubmit = e => {
+        e.preventDefault()
+        const { update, formData, match } = this.props
+        update(match.params.id,formData)
+    }
+
+    onChangeInput = e => {
+        const { setFormData } = this.props
+        setFormData({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    render(){
+
+        const { formData } = this.props
+
+        return (
+            <div>
+                <form onSubmit={this.onSubmit}>
+                {{#fields}}
+                    <{{ type }} 
+                        value={formData.{{ name }}}
+                        onChange={this.onChangeInput}
+                        placeholder="{{ placeholder }}"
+                        name="{{ name }}"/>
+                {{/fields}}
+                    <Button>Add</Button>
+                </form>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        formData: state.get(`{{ reducer }}`).formData
+    }
+}
+
+const mapDispatchToProps = {
+    setFormData, 
+    update,
+    get
+}
+
+const withConnect = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)
+
+export default compose(
+    withConnect
+)(EditContainer)
