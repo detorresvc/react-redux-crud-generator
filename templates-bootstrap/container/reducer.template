@@ -1,0 +1,59 @@
+import * as c from './actionTypes';
+
+export const INIT_STATE = {
+    list: [],
+    formData: {
+    {{#fields}}
+        {{ name }}: '',
+    {{/fields}}
+    }
+}
+
+export default (state = INIT_STATE, action) => {
+    switch(action.type){
+        
+        case c.CREATE:
+            return {
+                ...state,
+                list: [
+                    action.data,
+                    ...state.list
+                ],
+                formData: INIT_STATE.formData
+            }
+        case c.GET:
+            return {
+                ...state,
+                formData: state.list.find(item => item.id === action.id)
+            }
+        case c.UPDATE:
+            return {
+                ...state,
+                list: state.list.map(item => {
+                    if(item.id === action.id)
+                        return action.data
+                    return item
+                }),
+                formData: INIT_STATE.formData
+            }
+        case c.DELETE:
+            return {
+                ...state,
+                list: state.list.filter(item => item.id !== action.id)
+            }
+        case c.SET_FORM_DATA:
+            return {
+                ...state,
+                formData: {
+                    ...state.formData,
+                    ...action.data
+                }
+            }
+        case c.CLEAR_FORM_DATA:
+            return {
+                ...state,
+                formData: INIT_STATE.formData
+            }
+        default: return state
+    }
+}

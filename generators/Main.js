@@ -6,9 +6,7 @@ const changeCase = require('change-case')
 class Main extends Generator {
 
     constructor(modulename, modulepath){
-        super()
-        this.modulename = modulename
-        this.modulepath = modulepath
+        super(modulename, modulepath)
 
         this.finalDirectory = `containers/${changeCase.lowerCase(modulename)}`
         this.templateDirectory = 'container'

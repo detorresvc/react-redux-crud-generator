@@ -12,6 +12,7 @@ class Generator {
         this.modulepath = modulepath
 
         this.finalDirectory = `containers`
+        this.templatePath = undefined
         this.templateDirectory = 'container'
         this.templateFile = 'container'
 
@@ -24,16 +25,27 @@ class Generator {
         this.formFields = fields
     }
 
+    set setTemplatePath(path){
+        this.templatePath = path
+    }
+
     checkComponentTemplateExist(){
+        
+        if(this.templatePath){
+            return fs.existsSync(`${this.templatePath}/${this.templateDirectory}/${this.templateFile}.template`)
+        }
         return fs.existsSync(`${process.env.PWD}/${process.env.TEMPLATE_PATH}/${this.templateDirectory}/${this.templateFile}.template`)
     }
 
     checkWriteIfSuccess(){
-        return fs.existsSync(`${modulepath}/${this.finalDirectory}/${this.finalFile ? this.finalFile : modulename}.js`)
+        const file = `${this.modulepath}/${this.finalDirectory}/${this.finalFile ? this.finalFile : this.modulename}.js`
+        return fs.existsSync(file) 
+        ? { success: true, message: `${file} successfully created`  } 
+        : { success: false, message: `${file} creation failed`  } 
     }
 
     checkIfComponentFolderexist(){
-        return fs.existsSync(`${modulepath}/${this.finalDirectory}`)
+        return fs.existsSync(`${this.modulepath}/${this.finalDirectory}`)
     }
 
     mapFieldType(type){
@@ -73,33 +85,46 @@ class Generator {
     }
 
     process(){
-        const template = fs.readFileSync(`${process.env.PWD}/${process.env.TEMPLATE_PATH}/${this.templateDirectory}/${this.templateFile}.template`).toString()
+        let template = null
+        if(this.templatePath)
+            template = fs.readFileSync(`${this.templatePath}/${this.templateDirectory}/${this.templateFile}.template`).toString()
+        else
+            template = fs.readFileSync(`${process.env.PWD}/${process.env.TEMPLATE_PATH}/${this.templateDirectory}/${this.templateFile}.template`).toString()
         
+
         return  mustache.render(template, {
-            moduleName: modulename,
-            reducer: changeCase.camelCase(modulename),
+            moduleName: this.modulename,
+            reducer: changeCase.camelCase(this.modulename),
             componentToImport: this.componentToImport(this.formFields),
             fields: this.formatFields(this.formFields)
         })
     }
 
     writeFinalFile(){
-        
-        fs.writeFileSync(`${modulepath}/${this.finalDirectory}/${this.finalFile ? this.finalFile : modulename}.js`, this.process())
-        return this.checkWriteIfSuccess()
+        const file = `${this.modulepath}/${this.finalDirectory}/${this.finalFile ? this.finalFile : modulename}.js`
+        try{
+            const w = fs.writeFileSync(`${file}`, this.process(), {
+                flag: 'wx'
+            })
+            return this.checkWriteIfSuccess()
+        }catch(e){
+            return { 
+                success: false,
+                message: `${file} File already exist`
+             }
+        }
     }
 
     make(filename = undefined){
         this.finalFile = filename
+        
         if(this.checkIfComponentFolderexist()){
             return this.writeFinalFile()
         }
         
-        mkdirp.sync(`${modulepath}/${this.finalDirectory}`)
+        mkdirp.sync(`${changeCase.headerCase(this.modulepath)}/${this.finalDirectory}`)
         return this.writeFinalFile()
-   
     }
-
 }
 
 module.exports = Generator

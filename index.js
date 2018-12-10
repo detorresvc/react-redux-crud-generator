@@ -25,16 +25,17 @@ const TdGenerator = require('./generators/Td')
 
 program
 	.version('0.1.0')
-	.usage('[options] <modulename> <modulepath>')
-  	.arguments('<modulename> <modulepath>')
-  	.option('-f, --fields <fields>', 'Fields for form')
+	.usage('[options] <modulename> [modulepath]')
+  	.arguments('<modulename> [modulepath]')
+	.option('-f, --fields <fields>', 'Fields for form')
+	.option('-t, --templatepath <templatepath>', 'Path for custom template')
   	.action((name, path) => {
 		modulename = changeCase.pascalCase(name);
 		modulepath = path
  	})
   .parse(process.argv);
 	
-if(typeof modulepath === 'undefined' || typeof modulename === 'undefined'){
+if(typeof modulename === 'undefined'){
 	console.log(chalk.redBright('Arguments required'))
 	process.exit(1);
 }
@@ -99,17 +100,24 @@ const arrContainers = {
 }
 
 Object.keys(arrContainers).forEach(key => {
-	const Klas = new arrContainers[key].Klas(modulename, modulepath)
+	
+	
+	const Klas = new arrContainers[key].Klas(modulename, modulepath !== undefined ? modulepath : process.env.MODULE_PATH)
 	
 	if(program.fields){
 		Klas.fields = program.fields
 	}
+	
+	if(program.templatepath){
+		Klas.setTemplatePath = program.templatepath
+	}
 
 	if(Klas.checkComponentTemplateExist()){
-		if(Klas.make(arrContainers[key].filename))
-			console.log(chalk.greenBright(`${key} successfully created`))
+		const writeFile = Klas.make(arrContainers[key].filename)
+		if(writeFile.success)
+			console.log(chalk.greenBright(writeFile.message))
 		else
-			console.log(chalk.redBright(`${key} creation failed`))
+			console.log(chalk.redBright(writeFile.message))
 	}
 	else{
 		console.log(chalk.redBright(`${key} template doesnt exist`))

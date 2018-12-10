@@ -1,0 +1,37 @@
+import * as c from './actionTypes';
+
+export const setFormData = data => ({
+    type: c.SET_FORM_DATA,
+    data
+})
+
+export const clearFormData = () => ({
+    type: c.CLEAR_FORM_DATA
+})
+
+export const getList = (data) => ({
+    type: c.LIST,
+    data
+})
+
+export const get = (id, data) => ({
+    type: c.GET,
+    id
+})
+
+export const create = data => ({
+    type: c.CREATE,
+    data
+})
+
+export const update = (id, data) => ({
+    type: c.UPDATE,
+    id,
+    data
+})
+
+export const omit = id => ({
+    type: c.DELETE,
+    id
+})
+

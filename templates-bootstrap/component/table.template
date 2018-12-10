@@ -1,0 +1,5 @@
+import React from 'react';
+
+export default (props) => (
+    <table className="table table-stripped table-condensed table-bordered" {...props}>{props.children}</table>
+)

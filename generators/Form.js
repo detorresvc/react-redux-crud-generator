@@ -5,7 +5,7 @@ const Generator = require('./Generator')
 class Form extends Generator {
 
     constructor(modulename, modulepath){
-        super()
+        super(modulename, modulepath)
         this.modulename = 'Form'
         this.modulepath = modulepath
 

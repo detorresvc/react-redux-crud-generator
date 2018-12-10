@@ -1,0 +1,19 @@
+export const MODULE = `{{ moduleName }}`
+
+export const LIST = `${MODULE}/list`
+export const LIST_SUCCESS = `${MODULE}/list/success`
+
+export const GET = `${MODULE}/get`
+export const GET_SUCCESS = `${MODULE}/get/success`
+
+export const CREATE = `${MODULE}/create`
+export const CREATE_SUCCESS = `${MODULE}/create/success`
+
+export const UPDATE = `${MODULE}/update`
+export const UPDATE_SUCCESS = `${MODULE}/update/success`
+
+export const DELETE = `${MODULE}/delete`
+export const DELETE_SUCCESS = `${MODULE}/delete/success`
+
+export const SET_FORM_DATA = `${MODULE}/set/form_data`
+export const CLEAR_FORM_DATA = `${MODULE}/clear/form_data`
