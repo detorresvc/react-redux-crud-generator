@@ -8,7 +8,7 @@ class Reducer extends Generator {
     constructor(modulename, modulepath){
         super(modulename, modulepath)
 
-        this.finalDirectory = `containers/${changeCase.lowerCase(modulename)}`
+        this.finalDirectory = `containers/${changeCase.paramCase(modulename)}`
         this.templateDirectory = 'container'
         this.templateFile = 'reducer'
     }

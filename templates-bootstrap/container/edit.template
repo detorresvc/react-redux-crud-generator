@@ -32,14 +32,10 @@ class EditContainer extends Component {
         const { formData } = this.props
 
         return (
-            <div>
+            <div className="container">
                 <form onSubmit={this.onSubmit}>
                 {{#fields}}
-                    <{{ type }} 
-                        value={formData.{{ name }}}
-                        onChange={this.onChangeInput}
-                        placeholder="{{ placeholder }}"
-                        name="{{ name }}"/>
+                    {{{ . }}}
                 {{/fields}}
                     <Button>Update</Button>
                 </form>

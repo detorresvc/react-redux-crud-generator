@@ -3,9 +3,9 @@ import * as c from './actionTypes';
 export const INIT_STATE = {
     list: [],
     formData: {
-    {{#fields}}
+    {{#componentFields}}
         {{ name }}: '',
-    {{/fields}}
+    {{/componentFields}}
     }
 }
 
@@ -16,7 +16,10 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 list: [
-                    action.data,
+                    {
+                        id: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+                        ...action.data
+                    },
                     ...state.list
                 ],
                 formData: INIT_STATE.formData

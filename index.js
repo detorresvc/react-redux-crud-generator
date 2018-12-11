@@ -14,7 +14,11 @@ const RouterGenerator = require('./generators/Router')
 const MainGenerator = require('./generators/Main')
 const AddGenerator = require('./generators/Add')
 const EditGenerator = require('./generators/Edit')
+const InformationGenerator = require('./generators/Information')
+const ListingGenerator = require('./generators/Listing')
+
 const InputTextGenerator = require('./generators/InputText')
+const InputPasswordGenerator = require('./generators/InputPassword')
 const InputTextAreaGenerator = require('./generators/InputTextArea')
 const ButtonGenerator = require('./generators/Button')
 
@@ -22,6 +26,9 @@ const TableGenerator = require('./generators/Table')
 const TbodyGenerator = require('./generators/Tbody')
 const TrGenerator = require('./generators/Tr')
 const TdGenerator = require('./generators/Td')
+
+const SelectGenerator = require('./generators/Select')
+const OptionGenerator = require('./generators/Option')
 
 program
 	.version('0.1.0')
@@ -96,6 +103,26 @@ const arrContainers = {
 	Td: {
 		Klas: TdGenerator,
 		filename: 'Td',
+	},
+	Select: {
+		Klas: SelectGenerator,
+		filename: 'Select',
+	},
+	Option: {
+		Klas: OptionGenerator,
+		filename: 'Option',
+	},
+	InputPassword: {
+		Klas: InputPasswordGenerator,
+		filename: 'InputPassword',
+	},
+	Information: {
+		Klas: InformationGenerator,
+		filename: 'Information'
+	},
+	Listing: {
+		Klas: ListingGenerator,
+		filename: 'Listing'
 	}
 }
 

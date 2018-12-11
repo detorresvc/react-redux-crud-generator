@@ -3,6 +3,6 @@ import React from 'react';
 export default (props) => (
     <div className="form-group">
         <label for={props.id}>{props.placeholder}</label>
-        <textarea className="form-control" id={props.id} {...props}/>
+        <select className="form-control" {...props} id={props.id}>{props.children}</select>
     </div>
 )

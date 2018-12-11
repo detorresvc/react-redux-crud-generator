@@ -35,11 +35,7 @@ class AddContainer extends Component {
             <div>
                 <form onSubmit={this.onSubmit}>
                 {{#fields}}
-                    <{{ type }} 
-                        value={formData.{{ name }}}
-                        onChange={this.onChangeInput}
-                        placeholder="{{ placeholder }}"
-                        name="{{ name }}"/>
+                    {{{ . }}}
                 {{/fields}}
                     <Button>Add</Button>
                 </form>

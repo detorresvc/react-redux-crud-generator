@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default (props) => (
-    <div>
-        <label>{props.placeholder}</label>
-        <input type="text" className="form-control" {...props}/>
+    <div className="form-group">
+        <label for={props.id}>{props.placeholder}</label>
+        <input type="text" className="form-control" id={props.id} {...props}/>
     </div>
 )

@@ -29,11 +29,11 @@ class MainContainer extends Component {
                 <Table>
                     <Tbody>
                         <Tr>
-                        {{#fields}}
+                        {{#componentFields}}
                             <Td>
                                 {{ name }}
                             </Td>
-                        {{/fields}}
+                        {{/componentFields}}
                             <Td>
                                 Actions
                             </Td>
@@ -41,11 +41,11 @@ class MainContainer extends Component {
                         {list.map((item,i) => {
                             return (
                                 <Tr key={`item${i}`}>
-                                {{#fields}}
+                                {{#componentFields}}
                                     <Td>
                                         {item.{{ name }}}
                                     </Td>
-                                {{/fields}}
+                                {{/componentFields}}
                                     <Td>
                                         <Link to={`${match.path}${item.id}/edit`}>Edit</Link>
                                         {" "}

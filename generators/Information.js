@@ -3,15 +3,15 @@ require('dotenv').config()
 const Generator = require('./Generator')
 const changeCase = require('change-case')
 
-class Router extends Generator {
+class Information extends Generator {
 
     constructor(modulename, modulepath){
         super(modulename, modulepath)
 
         this.finalDirectory = `containers/${changeCase.paramCase(modulename)}`
         this.templateDirectory = 'container'
-        this.templateFile = 'router'
+        this.templateFile = 'information'
     }
 }
 
-module.exports = Router
+module.exports = Information
