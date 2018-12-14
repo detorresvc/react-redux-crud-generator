@@ -1,0 +1,65 @@
+import { all, take, fork, actionChannel, call, takeLatest, put } from 'redux-saga/effects';
+import { buffers  } from 'redux-saga';
+import * as c from './actionTypes';
+import request from './request';
+
+function* watchList(){
+
+	const requestChan = yield actionChannel(c.LIST, buffers.sliding(0))
+	
+	while(true){
+		const { params } = yield take(requestChan);
+		yield call(request.list, params);
+	}
+}
+
+function* watchGet(){
+
+	const requestChan = yield actionChannel(c.GET, buffers.sliding(0))
+	
+	while(true){
+		const { id } = yield take(requestChan);
+		yield call(request.get, id);
+	}
+}
+
+function* watchCreate(){
+
+	const requestChan = yield actionChannel(c.CREATE, buffers.sliding(0))
+	
+	while(true){
+		const { data } = yield take(requestChan);
+		yield call(request.create, data);
+	}
+}
+
+function* watchUpdate(){
+
+	const requestChan = yield actionChannel(c.UPDATE, buffers.sliding(0))
+	
+	while(true){
+		const { id, data } = yield take(requestChan);
+		yield call(request.update, id, data);
+	}
+}
+
+function* watchDelete(){
+
+	const requestChan = yield actionChannel(c.UPDATE, buffers.sliding(0))
+	
+	while(true){
+		const { id } = yield take(requestChan);
+		yield call(request.omit, id);
+	}
+}
+
+
+export default function* {{ moduleName }}(){
+	return yield all([
+            watchList(),
+            watchGet(),
+            watchCreate(),
+            watchUpdate(),
+            watchDelete()
+		])
+}

@@ -1,0 +1,43 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import Listing from './Listing';
+import Information from './Information';
+
+class MainContainer extends Component {
+
+    render(){
+
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-4">
+                        <Listing />
+                    </div>
+                    <div className="col-md-8">
+                        <Information />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        
+    }
+}
+
+const mapDispatchToProps = {
+    
+}
+
+const withConnect = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)
+
+export default compose(
+    withConnect
+)(MainContainer)

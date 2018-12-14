@@ -159,6 +159,7 @@ class Generator {
         
         return  mustache.render(template, {
             moduleName: this.modulename,
+            moduleNameLowerCase: changeCase.lowerCase(this.modulename),
             reducer: changeCase.camelCase(this.modulename),
             componentToImport: this.componentToImport(this.formFields),
             fields: this.formatFields(this.formFields),

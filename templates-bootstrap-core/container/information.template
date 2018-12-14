@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import Table from '../../components/Table';
+import Tbody from '../../components/Tbody';
+import Tr from '../../components/Tr';
+import Td from '../../components/Td';
+import { get, omit } from './actions';
+import { Link } from 'react-router-dom';
+
+class Information extends Component {
+    
+    componentDidMount(){
+        const { get, id } = this.props
+        get(id)
+    }
+
+    onDelete = data => e => {
+        e.preventDefault()
+
+        const r = confirm(`Do you want to delete data with id ${data.id}`);
+        if (r == true) {
+            const { omit } = this.props 
+            omit(data.id)
+        } 
+    }
+
+    render(){
+
+        const { match, selected } = this.props
+
+        return (
+            <Table className="table table-stripped table-condensed">
+                {{#componentFields}}
+                <Tbody>
+                    <Tr>
+                        <Td>
+                            {{ name }}
+                        </Td>
+                        <Td>
+                            {selected.{{ name }}}
+                        </Td>
+                    </Tr>
+                </Tbody>
+                {{/componentFields}}
+            </Table>
+        )
+    }
+}
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        id: ownProps.id || state.get(`{{ reducer }}`).selected.id,
+        selected: state.get(`{{ reducer }}`).selected
+    }
+}
+
+const mapDispatchToProps = {
+    get,
+    omit
+}
+
+const withConnect = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)
+
+export default compose(
+    withConnect
+)(Information)

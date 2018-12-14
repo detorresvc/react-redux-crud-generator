@@ -30,6 +30,9 @@ const TdGenerator = require('./generators/Td')
 const SelectGenerator = require('./generators/Select')
 const OptionGenerator = require('./generators/Option')
 
+const RequestGenerator = require('./generators/Request')
+const SagaGenerator = require('./generators/Saga')
+
 program
 	.version('0.1.0')
 	.usage('[options] <modulename> [modulepath]')
@@ -123,6 +126,14 @@ const arrContainers = {
 	Listing: {
 		Klas: ListingGenerator,
 		filename: 'Listing'
+	},
+	Request: {
+		Klas: RequestGenerator,
+		filename: 'request'
+	},
+	Saga: {
+		Klas: SagaGenerator,
+		filename: 'saga'
 	}
 }
 

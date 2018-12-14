@@ -1,0 +1,8 @@
+import React from 'react';
+
+export default (props) => (
+    <div className="form-group">
+        <label htmlFor={props.id}>{props.placeholder}</label>
+        <select className="form-control" {...props} id={props.id}>{props.children}</select>
+    </div>
+)

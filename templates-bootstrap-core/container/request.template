@@ -1,0 +1,110 @@
+import request from 'axios';
+import * as c from './actionTypes';
+import { call, put } from 'redux-saga/effects'
+
+const URI = `https://jsonplaceholder.typicode.com`;
+
+
+function* list(params){
+
+	try{
+		const response = yield call(request.get, `${URI}/{{ moduleNameLowerCase }}`,  { params });
+
+		yield put({
+			type: c.LIST_SUCCESS,
+			data: response.data
+		})
+	}
+	catch(errors){
+		
+		yield put({
+			type: c.FORM_ERROR,
+			errors
+		})	
+	}
+}
+
+function* get(id){
+
+	try{
+		const response = yield call(request.get, `${URI}/{{ moduleNameLowerCase }}/${id}`);
+
+		yield put({
+			type: c.GET_SUCCESS,
+			data: response.data
+		})
+	}
+	catch(errors){
+		
+		yield put({
+			type: c.FORM_ERROR,
+			errors
+		})	
+	}
+}
+
+function* create(data){
+
+	try{
+		const response = yield call(request.post, `${URI}/{{ moduleNameLowerCase }}`, { data });
+
+		yield put({
+			type: c.CREATE_SUCCESS,
+			data: response.data
+		})
+	}
+	catch(errors){
+		
+		yield put({
+			type: c.FORM_ERROR,
+			errors
+		})	
+	}
+}
+
+function* create(id, data){
+
+	try{
+		const response = yield call(request.put, `${URI}/{{ moduleNameLowerCase }}/${id}`, { data });
+
+		yield put({
+			type: c.UPDATE_SUCCESS,
+			data: response.data
+		})
+	}
+	catch(errors){
+		
+		yield put({
+			type: c.FORM_ERROR,
+			errors
+		})	
+	}
+}
+
+function* omit(id){
+
+	try{
+		const response = yield call(request.delete, `${URI}/{{ moduleNameLowerCase }}/${id}`);
+
+		yield put({
+			type: c.GET_SUCCESS,
+			id
+		})
+	}
+	catch(errors){
+		
+		yield put({
+			type: c.FORM_ERROR,
+			errors
+		})	
+	}
+}
+
+
+export {
+    list,
+    get,
+    create,
+    update,
+    omit 
+}

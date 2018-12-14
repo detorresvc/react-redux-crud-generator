@@ -1,0 +1,27 @@
+import * as c from './actionTypes';
+import { fromJS } from 'immutable';
+
+export const INIT_STATE = fromJS({
+    list: [],
+    selected: {
+    {{#componentFields}}
+        {{ name }}: '',
+    {{/componentFields}}
+    },
+    formData: {
+    {{#componentFields}}
+        {{ name }}: '',
+    {{/componentFields}}
+    },
+    formErrors: {}
+})
+
+export default (state = INIT_STATE, action) => {
+    switch(action.type){
+        case c.LIST_SUCCESS:
+            return state.set(`list`, fromJS(action.data))
+        case c.FORM_ERROR:
+			return state.set(`formErrors`, fromJS(action.errors))
+        default: return state
+    }
+}
