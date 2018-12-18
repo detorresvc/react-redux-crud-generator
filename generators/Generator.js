@@ -78,7 +78,7 @@ class Generator {
                             name="${a[0]}"
                             id="${a[0]}"
                             onChange={this.onChangeInput}
-                            value={formData.${a[0]}}/>`
+                            value={formData.get('${a[0]}')}/>`
             }
 
             if(a[1] === `password`){
@@ -87,7 +87,7 @@ class Generator {
                             name="${a[0]}"
                             id="${a[0]}"
                             onChange={this.onChangeInput}
-                            value={formData.${a[0]}}/>`
+                            value={formData.get('${a[0]}')}/>`
             }
 
             if(a[1] === `text`){
@@ -96,7 +96,7 @@ class Generator {
                             name="${a[0]}"
                             id="${a[0]}"
                             onChange={this.onChangeInput}
-                            value={formData.${a[0]}}/>`
+                            value={formData.get('${a[0]}')}/>`
             }
 
             if(a[1] === `option`){
@@ -109,7 +109,7 @@ class Generator {
                             name="${a[0]}"
                             id="${a[0]}"
                             onChange={this.onChangeInput}
-                            value={formData.${a[0]}}>
+                            value={formData.get('${a[0]}')}>
                             ${arrOptions.map(opt => {
                                 return `<Option value="${opt}">${opt}</Option>\r\n`
                             }).toString().replace(/,/g, '')}
@@ -179,7 +179,7 @@ class Generator {
             
             return { 
                 success: false,
-                message: `${file} File already exist`
+                message: e.toString()
              }
         }
     }

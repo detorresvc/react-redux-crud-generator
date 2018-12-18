@@ -9,7 +9,9 @@ function* watchList(){
 	
 	while(true){
 		const { params } = yield take(requestChan);
-		yield call(request.list, params);
+		const response = yield call(request.list, params);
+
+		yield call(request.get, response[0])
 	}
 }
 
@@ -30,6 +32,8 @@ function* watchCreate(){
 	while(true){
 		const { data } = yield take(requestChan);
 		yield call(request.create, data);
+
+        yield call(request.list)
 	}
 }
 
@@ -40,6 +44,8 @@ function* watchUpdate(){
 	while(true){
 		const { id, data } = yield take(requestChan);
 		yield call(request.update, id, data);
+
+        yield call(request.list)
 	}
 }
 
@@ -50,6 +56,8 @@ function* watchDelete(){
 	while(true){
 		const { id } = yield take(requestChan);
 		yield call(request.omit, id);
+
+        yield call(request.list)
 	}
 }
 

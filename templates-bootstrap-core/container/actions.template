@@ -1,8 +1,9 @@
 import * as c from './actionTypes';
 
-export const setFormData = data => ({
+export const setFormData = (key, value) => ({
     type: c.SET_FORM_DATA,
-    data
+    key, 
+    value
 })
 
 export const clearFormData = () => ({

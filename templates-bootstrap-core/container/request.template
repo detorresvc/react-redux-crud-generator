@@ -14,6 +14,7 @@ function* list(params){
 			type: c.LIST_SUCCESS,
 			data: response.data
 		})
+		return response.data
 	}
 	catch(errors){
 		
@@ -62,7 +63,7 @@ function* create(data){
 	}
 }
 
-function* create(id, data){
+function* update(id, data){
 
 	try{
 		const response = yield call(request.put, `${URI}/{{ moduleNameLowerCase }}/${id}`, { data });
@@ -101,7 +102,7 @@ function* omit(id){
 }
 
 
-export {
+export default {
     list,
     get,
     create,

@@ -33,7 +33,7 @@ class Listing extends Component {
                             <Tr key={`item${i}`}>
                             {{#priorityField}}
                                 <Td>
-                                    {item.{{ name }}}
+                                    { item.get(`{{ name }}`) }
                                 </Td>
                             {{/priorityField}}
                             </Tr>
@@ -47,7 +47,7 @@ class Listing extends Component {
 
 const mapStateToProps = state => {
     return {
-        list: state.get(`{{ reducer }}`).list
+        list: state.getIn([`{{ reducer }}`, `list`])
     }
 }
 

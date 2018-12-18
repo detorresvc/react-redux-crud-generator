@@ -20,6 +20,12 @@ export default (state = INIT_STATE, action) => {
     switch(action.type){
         case c.LIST_SUCCESS:
             return state.set(`list`, fromJS(action.data))
+        case c.GET_SUCCESS:
+            return state.set(`selected`, fromJS(action.data))
+        case c.SET_FORM_DATA:
+            return state.setIn([`formData`, action.key], action.value)
+        case c.CLEAR_FORM_DATA:
+            return state.set(`formData`, INIT_STATE.get(`formData`))
         case c.FORM_ERROR:
 			return state.set(`formErrors`, fromJS(action.errors))
         default: return state

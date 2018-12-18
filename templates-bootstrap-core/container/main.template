@@ -1,12 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import Listing from './Listing';
-import Information from './Information';
+import React, { Component, Suspense, lazy } from 'react';
+import { Route } from 'react-router-dom';
+
+const WaitingComponent = (Component) => {
+    return props => (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component {...props} />
+      </Suspense>
+    );
+}
+
+const Listing = WaitingComponent(lazy(() => import('./Listing')))
+const Information = WaitingComponent(lazy(() => import('./Information')))
+const Add = WaitingComponent(lazy(() => import('./Add')))
+const Edit = WaitingComponent(lazy(() => import('./Edit')))
 
 class MainContainer extends Component {
 
     render(){
+
+        const { match } = this.props
 
         return (
             <div className="container">
@@ -15,7 +27,9 @@ class MainContainer extends Component {
                         <Listing />
                     </div>
                     <div className="col-md-8">
-                        <Information />
+                        <Route exact path={`${match.path}/:id(\\d+)?`} component={Information}/>
+                        <Route exact path={`${match.path}/add`} component={Add}/>
+                        <Route path={`${match.path}/:id/edit`} component={Edit}/>
                     </div>
                 </div>
             </div>
@@ -23,21 +37,4 @@ class MainContainer extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        
-    }
-}
-
-const mapDispatchToProps = {
-    
-}
-
-const withConnect = connect(
-    mapStateToProps, 
-    mapDispatchToProps
-)
-
-export default compose(
-    withConnect
-)(MainContainer)
+export default MainContainer

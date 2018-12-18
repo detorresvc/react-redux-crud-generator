@@ -6,7 +6,6 @@ import Tbody from '../../components/Tbody';
 import Tr from '../../components/Tr';
 import Td from '../../components/Td';
 import { get, omit } from './actions';
-import { Link } from 'react-router-dom';
 
 class Information extends Component {
     
@@ -27,7 +26,7 @@ class Information extends Component {
 
     render(){
 
-        const { match, selected } = this.props
+        const { selected } = this.props
 
         return (
             <Table className="table table-stripped table-condensed">
@@ -35,10 +34,10 @@ class Information extends Component {
                 <Tbody>
                     <Tr>
                         <Td>
-                            {{ name }}
+                            {{ placeholder }}
                         </Td>
                         <Td>
-                            {selected.{{ name }}}
+                            { selected.get(`{{ name }}`) }
                         </Td>
                     </Tr>
                 </Tbody>
@@ -50,8 +49,8 @@ class Information extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        id: ownProps.id || state.get(`{{ reducer }}`).selected.id,
-        selected: state.get(`{{ reducer }}`).selected
+        id: ownProps.id || state.getIn([`{{ reducer }}`, `selected`, `id`]),
+        selected: state.getIn([`{{ reducer }}`, `selected`])
     }
 }
 

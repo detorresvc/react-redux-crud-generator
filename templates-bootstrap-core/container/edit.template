@@ -22,9 +22,7 @@ class EditContainer extends Component {
 
     onChangeInput = e => {
         const { setFormData } = this.props
-        setFormData({
-            [e.target.name]: e.target.value
-        })
+        setFormData(e.target.name, e.target.value)
     }
 
     render(){
@@ -46,7 +44,7 @@ class EditContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        formData: state.get(`{{ reducer }}`).formData
+        formData: state.getIn([`{{ reducer }}`, `formData`])
     }
 }
 
